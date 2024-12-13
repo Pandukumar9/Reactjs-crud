@@ -319,6 +319,100 @@
           "empId": 0
         }
       ]
+    },
+    {
+      "id": "023d",
+      "empId": 0,
+      "name": "sai prasanna",
+      "contactNo": "666666666",
+      "email": "saiprasanna123@gmail.com",
+      "city": "hyd",
+      "state": "kg",
+      "pinCode": "454354",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 0,
+          "name": "nitya",
+          "relation": "Sister",
+          "age": "22",
+          "empId": 0
+        },
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "soni",
+          "relation": "Father",
+          "age": "24",
+          "empId": 0
+        }
+      ]
+    },
+    {
+      "id": 0,
+      "empId": 0,
+      "name": "tejaj",
+      "contactNo": "423432",
+      "email": "tejas@gmail.com",
+      "city": "bgl",
+      "state": "tg",
+      "pinCode": "424325",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "vamshi",
+          "relation": "Father",
+          "age": "23",
+          "empId": 0
+        },
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "sai",
+          "relation": "Sister",
+          "age": "23",
+          "empId": 0
+        }
+      ]
+    },
+    {
+      "id": 0,
+      "empId": 0,
+      "name": "tejashwini",
+      "contactNo": "77777777",
+      "email": "tejashwini@gmail.com",
+      "city": "mng",
+      "state": "kg",
+      "pinCode": "44444444",
+      "designation": "Team Leader",
+      "mockEmpRelatives": [
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "vamshi",
+          "relation": "Father",
+          "age": "23",
+          "empId": 0
+        },
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "sai",
+          "relation": "Sister",
+          "age": "23",
+          "empId": 0
+        },
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "nitya",
+          "relation": "Father",
+          "age": "44",
+          "empId": 0
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,324 @@
+{
+  "employees": [
+    {
+      "id": "2276",
+      "empId": 0,
+      "name": "Pandukumar",
+      "contactNo": "878787856",
+      "email": "pandukumar.gujja@gmail.com",
+      "city": "Wgl",
+      "state": "Telangana",
+      "pinCode": "506002",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 0,
+          "name": "Anu",
+          "relation": "Sister",
+          "age": "36",
+          "empId": 0
+        }
+      ]
+    },
+    {
+      "id": "2277",
+      "empId": 1,
+      "name": "Arun Kumar",
+      "contactNo": "8888776655",
+      "email": "arun.kumar@gmail.com",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "pinCode": "500001",
+      "designation": "Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 1,
+          "name": "Ravi",
+          "relation": "Brother",
+          "age": "30",
+          "empId": 1
+        }
+      ]
+    },
+    {
+      "id": "2278",
+      "empId": 2,
+      "name": "Divya Sharma",
+      "contactNo": "7778665544",
+      "email": "divya.sharma@gmail.com",
+      "city": "Delhi",
+      "state": "Delhi",
+      "pinCode": "110001",
+      "designation": "Team Lead",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 2,
+          "name": "Meera",
+          "relation": "Mother",
+          "age": "58",
+          "empId": 2
+        }
+      ]
+    },
+    {
+      "id": "2279",
+      "empId": 3,
+      "name": "Kiran Reddy",
+      "contactNo": "9898989898",
+      "email": "kiran.reddy@gmail.com",
+      "city": "Vizag",
+      "state": "Andhra Pradesh",
+      "pinCode": "530001",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 3,
+          "name": "Hari",
+          "relation": "Father",
+          "age": "60",
+          "empId": 3
+        }
+      ]
+    },
+    {
+      "id": "2280",
+      "empId": 4,
+      "name": "Sneha Roy",
+      "contactNo": "7676767676",
+      "email": "sneha.roy@gmail.com",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "pinCode": "700001",
+      "designation": "Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 4,
+          "name": "Neha",
+          "relation": "Sister",
+          "age": "29",
+          "empId": 4
+        }
+      ]
+    },
+    {
+      "id": "2281",
+      "empId": 5,
+      "name": "Rahul Verma",
+      "contactNo": "9090909090",
+      "email": "rahul.verma@gmail.com",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "pinCode": "600001",
+      "designation": "Manager",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 5,
+          "name": "Sunita",
+          "relation": "Wife",
+          "age": "32",
+          "empId": 5
+        }
+      ]
+    },
+    {
+      "id": "2282",
+      "empId": 6,
+      "name": "Megha Singh",
+      "contactNo": "9191919191",
+      "email": "megha.singh@gmail.com",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pinCode": "400001",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 6,
+          "name": "Vikram",
+          "relation": "Brother",
+          "age": "28",
+          "empId": 6
+        }
+      ]
+    },
+    {
+      "id": "2283",
+      "empId": 7,
+      "name": "Amit Khurana",
+      "contactNo": "9292929292",
+      "email": "amit.khurana@gmail.com",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "pinCode": "411001",
+      "designation": "Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 7,
+          "name": "Raj",
+          "relation": "Cousin",
+          "age": "35",
+          "empId": 7
+        }
+      ]
+    },
+    {
+      "id": "2284",
+      "empId": 8,
+      "name": "Priya Nair",
+      "contactNo": "9393939393",
+      "email": "priya.nair@gmail.com",
+      "city": "Cochin",
+      "state": "Kerala",
+      "pinCode": "682001",
+      "designation": "Team Lead",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 8,
+          "name": "Vani",
+          "relation": "Mother",
+          "age": "55",
+          "empId": 8
+        }
+      ]
+    },
+    {
+      "id": "2285",
+      "empId": 9,
+      "name": "Ravi Teja",
+      "contactNo": "9494949494",
+      "email": "ravi.teja@gmail.com",
+      "city": "Warangal",
+      "state": "Telangana",
+      "pinCode": "506003",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 9,
+          "name": "Manju",
+          "relation": "Sister",
+          "age": "30",
+          "empId": 9
+        }
+      ]
+    },
+    {
+      "id": "2286",
+      "empId": 10,
+      "name": "Nitin Joshi",
+      "contactNo": "9595959595",
+      "email": "nitin.joshi@gmail.com",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "pinCode": "302001",
+      "designation": "Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 10,
+          "name": "Aarti",
+          "relation": "Wife",
+          "age": "27",
+          "empId": 10
+        }
+      ]
+    },
+    {
+      "id": "2287",
+      "empId": 11,
+      "name": "Anil Kapoor",
+      "contactNo": "9696969696",
+      "email": "anil.kapoor@gmail.com",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "pinCode": "226001",
+      "designation": "Manager",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 11,
+          "name": "Vikas",
+          "relation": "Son",
+          "age": "22",
+          "empId": 11
+        }
+      ]
+    },
+    {
+      "id": "2288",
+      "empId": 12,
+      "name": "Neha Gupta",
+      "contactNo": "9797979797",
+      "email": "neha.gupta@gmail.com",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pinCode": "380001",
+      "designation": "Team Lead",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 12,
+          "name": "Deepak",
+          "relation": "Brother",
+          "age": "34",
+          "empId": 12
+        }
+      ]
+    },
+    {
+      "id": "2289",
+      "empId": 13,
+      "name": "Vikram Desai",
+      "contactNo": "9898989899",
+      "email": "vikram.desai@gmail.com",
+      "city": "Surat",
+      "state": "Gujarat",
+      "pinCode": "395001",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 13,
+          "name": "Rajesh",
+          "relation": "Father",
+          "age": "62",
+          "empId": 13
+        }
+      ]
+    },
+    {
+      "id": "2290",
+      "empId": 14,
+      "name": "Rohit Sen",
+      "contactNo": "9798989898",
+      "email": "rohit.sen@gmail.com",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "pinCode": "560001",
+      "designation": "Manager",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 14,
+          "name": "Renu",
+          "relation": "Wife",
+          "age": "33",
+          "empId": 14
+        }
+      ]
+    },
+    {
+      "id": "5728",
+      "empId": 0,
+      "name": "nitya",
+      "contactNo": "321321",
+      "email": "nitya@gmail.com",
+      "city": "hyd",
+      "state": "knt",
+      "pinCode": "8789792",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "relativeId": 0,
+          "name": "nitya",
+          "relation": "Mother",
+          "age": "22",
+          "empId": 0
+        }
+      ]
+    }
+  ]
+}

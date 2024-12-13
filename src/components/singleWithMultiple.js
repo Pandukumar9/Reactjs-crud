@@ -30,70 +30,125 @@ const SingleWithMultple = () => {
         getAllEmployee();
     }, [])
 
-    //this is for get all employees
-    const getAllEmployee = async () => {
-        const result = await axios.get("https://onlinetestapi.gerasim.in/api/Mock/GetAllEmployees");
-        setEmpList(result.data.data)
+   // Get all employees
+   const getAllEmployee = async () => {
+    try {
+      const result = await axios.get("http://localhost:4500/employees");
+      if (result.status === 200 && Array.isArray(result.data)) {
+        setEmpList(result.data);
+      } else {
+        setEmpList([]); // Ensure empList is always an array
+        alert("Failed to fetch employees.");
+      }
+    } catch (error) {
+      setEmpList([]); // Set empList to an empty array on error
+      alert("Error fetching employee list: " + error.message);
     }
+  };
+  
 
-    // this is for add relatives
-    const addRelative = () => {
-        setEmployeeObj(prevObj => ({ ...prevObj, mockEmpRelatives: [...prevObj.mockEmpRelatives, relativeObj] }))
-    }
-
-    //this is for add employee
-    const createEmployee = async () => {
-        const response = await axios.post("https://onlinetestapi.gerasim.in/api/Mock/CreateEmployee", employeeObj);
-        if (response.data.result) {
-            alert("Employee Creation Success");
-            getAllEmployee();
-        } else {
-            alert(response.data.message)
-        }
-    }
-
-    const changeView = () => {
-        setIsNewView(!isNewView)
-    }
-
-    // this is for update employeess
+    // Update form values for Employee (indivdual each field)
     const updateEmpFormValues = (event, key) => {
         setEmployeeObj(prevObj => ({ ...prevObj, [key]: event.target.value }))
     }
 
+   // Update form values for Relative (indivdual each field)
     const updateRelativeFormValues = (event, key) => {
         setRelativeObj(prevObj => ({ ...prevObj, [key]: event.target.value }))
     }
 
-    const updateEMp =   async () => {
-        const response = await axios.post("https://onlinetestapi.gerasim.in/api/Mock/UpdateEmployee", employeeObj); 
-        if (response.data.result) {
-            alert("Employee Update Success");
-            getAllEmployee()
+  // Add a new relative to employee
+    const addRelative = () => {
+        setEmployeeObj(prevObj => ({ ...prevObj, mockEmpRelatives: [...prevObj.mockEmpRelatives, relativeObj] }))
+    }
+
+    // Add a new employee
+    const createEmployee = async () => {
+        const response = await axios.post("http://localhost:4500/employees", employeeObj);
+        if (response.data) {
+            alert("Employee Creation Success");
+            getAllEmployee();
+            setEmployeeObj({
+                empId: 0,
+                name: "",
+                contactNo: "",
+                email: "",
+                city: "",
+                state: "",
+                pinCode: "",
+                designation: "",
+                mockEmpRelatives: [],
+              });
         } else {
-            alert(response.data.message)
+            // alert(response.data);
+            alert("Failed to create employee");
         }
     }
 
-    const deletEmp =   async (id) => {
-        const isDelet = window.confirm('Are you Sure want to delete');
-        if(isDelet) {
-            const response = await axios.get("https://onlinetestapi.gerasim.in/api/Mock/DeleteEmployeeById?id=" +id); 
-            if (response.data.result) {
-                alert("Employee Deleted Success");
-                getAllEmployee()
-            } else {
-                alert(response.data.message)
-            }
-        }
-        
+    // Change view 
+    const changeView = () => {
+        setIsNewView(!isNewView)
     }
 
-    const getEmployeeById = async (id) => {
-        const result =  await axios.get("https://onlinetestapi.gerasim.in/api/Mock/GetEmployeeById?id=" + id);
-        setEmployeeObj(result.data.data);
+ // Update an existing employee
+const updateEmp = async () => {
+    if (employeeObj.empId === 0) {
+      alert("Please select an employee to update");
+      return;
+    }
+  
+    try {
+      const response = await axios.put(`http://localhost:4500/employees/${employeeObj.empId}`, employeeObj);
+      if (response.status === 200) {
+        alert("Employee Update Success");
+        getAllEmployee();
+        setEmployeeObj({
+          empId: 0,
+          name: "",
+          contactNo: "",
+          email: "",
+          city: "",
+          state: "",
+          pinCode: "",
+          designation: "",
+          mockEmpRelatives: [],
+        });
+      }
+    } catch (error) {
+      alert("Failed to update employee: " + error.message);
+    }
+  };
+  
+  // Delete an employee
+  const deleteEmp = async (id) => {
+    const isDelete = window.confirm("Are you sure you want to delete?");
+    if (isDelete) {
+      try {
+        const response = await axios.delete(`http://localhost:4500/employees/${id}`);
+        if (response.status === 200) {
+          alert("Employee Deleted Successfully");
+          getAllEmployee();
+        }
+      } catch (error) {
+        alert("Failed to delete employee: " + error.message);
+      }
+    }
+  };
+  
+
+  const getEmployeeById = async (id) => {
+    try {
+      const result = await axios.get(`http://localhost:4500/employees?id=${id}`);
+      if (result.status === 200 && result.data) {
+        setEmployeeObj(result.data);
         changeView();
+      } else {
+        alert("Failed to fetch employee details. Please try again.");
+      }
+    } catch (error) {
+      alert("An error occurred while fetching employee details: " + error.message);
     }
+  };  
 
     return (
         <div className="container-fluid">
@@ -170,7 +225,7 @@ const SingleWithMultple = () => {
                                                 </button>
                                                 }
                                                 {
-                                                    employeeObj.empId !== 0  &&   <button className="btn btn-sm bg-secondary" onClick={updateEMp}>
+                                                    employeeObj.empId !== 0  &&   <button className="btn btn-sm bg-secondary" onClick={updateEmp}>
                                                     Update Employee
                                                 </button>
                                                 } 
@@ -268,22 +323,33 @@ const SingleWithMultple = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
-                                            empList.map((item, index) => {
-                                                return (<tr>
-                                                    <td>{index + 1}</td>
-                                                    <td>{item.name}</td>
-                                                    <td>{item.contactNo}</td>
-                                                    <td>{item.city}</td>
-                                                    <td>{item.designation}</td>
-                                                    <td>
-                                                        <button className='btn btn-sm btn-primary' onClick={()=>{getEmployeeById(item.empId)}}>Edit</button>
-                                                        <button className='btn btn-sm btn-danger mx-2' onClick={()=>{deletEmp(item.empId)}}>Delete</button>
-                                                    </td>
-                                                </tr>)
-                                            })
-                                        }
-                                    </tbody>
+  {empList && empList.length > 0 ? (
+    empList.map((item, index) => (
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{item.name}</td>
+        <td>{item.contactNo}</td>
+        <td>{item.city}</td>
+        <td>{item.designation}</td>
+        <td>
+          <button className="btn btn-sm btn-primary" onClick={() => getEmployeeById(item.id)}>
+            Edit
+          </button>
+          <button className="btn btn-sm btn-danger mx-2" onClick={() => deleteEmp(item.id)}>
+            Delete
+          </button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="6" className="text-center">
+        No employees found.
+      </td>
+    </tr>
+  )}
+</tbody>
+
                                 </table>
                             </div>
                         </div>

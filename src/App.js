@@ -1,4 +1,4 @@
-import MovieBooking from './components/MovieBooking';
+// import MovieBooking from './components/MovieBooking';
 import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 // import GroceryApp from './pages/GroceryApp';

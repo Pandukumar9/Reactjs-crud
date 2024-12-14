@@ -349,7 +349,7 @@
       ]
     },
     {
-      "id": 0,
+      "id": "f22ds",
       "empId": 0,
       "name": "tejaj",
       "contactNo": "423432",
@@ -378,7 +378,7 @@
       ]
     },
     {
-      "id": 0,
+      "id": "2fs3",
       "empId": 0,
       "name": "tejashwini",
       "contactNo": "77777777",
@@ -413,6 +413,39 @@
           "empId": 0
         }
       ]
+    },
+    {
+      "id": "df97",
+      "empId": 0,
+      "name": "manojkumar",
+      "contactNo": "38445435",
+      "email": "manojkumar@gmail.com",
+      "city": "pune",
+      "state": "pmn",
+      "pinCode": "6666666",
+      "designation": "Sr Developer",
+      "mockEmpRelatives": [
+        {
+          "id": 0,
+          "relativeId": 0,
+          "name": "swathi",
+          "relation": "Sister",
+          "age": "22",
+          "empId": 0
+        }
+      ]
+    },
+    {
+      "id": "e1be",
+      "empId": 0,
+      "name": "manoj",
+      "contactNo": "3827987973",
+      "email": "nitya@gmail.com",
+      "city": "hyd",
+      "state": "",
+      "pinCode": "dsa",
+      "designation": "Jr Developer",
+      "mockEmpRelatives": []
     }
   ]
 }

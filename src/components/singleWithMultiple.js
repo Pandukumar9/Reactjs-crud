@@ -15,7 +15,6 @@ const SingleWithMultple = () => {
   });
 
   let [relativeObj, setRelativeObj] = useState({
-    id: 0,
     relativeId: 0,
     name: "",
     relation: "",
@@ -25,10 +24,19 @@ const SingleWithMultple = () => {
 
   let [empList, setEmpList] = useState([]);
   let [isNewView, setIsNewView] = useState(false);
+  let [searchTerm, setSearchTerm] = useState("");
+  let [currentPage, setCurrentPage] = useState(1);
+  let [itemsPerPage] = useState(5);
+  let [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
   useEffect(() => {
     getAllEmployee();
   }, []);
+
+  // Reset page when search term changes
+  useEffect(() => {
+    setCurrentPage(1); // Reset to the first page when the search term changes
+  }, [searchTerm]);
 
   // Get all employees
   const getAllEmployee = async () => {
@@ -46,12 +54,12 @@ const SingleWithMultple = () => {
     }
   };
 
-  // Update form values for Employee (indivdual each field)
+  // Update form values for Employee (individual field)
   const updateEmpFormValues = (event, key) => {
     setEmployeeObj((prevObj) => ({ ...prevObj, [key]: event.target.value }));
   };
 
-  // Update form values for Relative (indivdual each field)
+  // Update form values for Relative (individual field)
   const updateRelativeFormValues = (event, key) => {
     setRelativeObj((prevObj) => ({ ...prevObj, [key]: event.target.value }));
   };
@@ -73,27 +81,8 @@ const SingleWithMultple = () => {
     if (response.data) {
       alert("Employee Creation Success");
       getAllEmployee();
-      setEmployeeObj({
-        empId: 0,
-        name: "",
-        contactNo: "",
-        email: "",
-        city: "",
-        state: "",
-        pinCode: "",
-        designation: "",
-        mockEmpRelatives: [],
-      });
-      setRelativeObj({
-        id: 0,
-        relativeId: 0,
-        name: "",
-        relation: "",
-        age: 0,
-        empId: 0,
-      });
+      initialData();
     } else {
-      // alert(response.data);
       alert("Failed to create employee");
     }
   };
@@ -105,39 +94,20 @@ const SingleWithMultple = () => {
 
   // Update an existing employee
   const updateEmp = async () => {
-    if (employeeObj.id === 0) {
-      // Corrected this to `empId`
+    if (employeeObj.empId === 0) {
       alert("Please select an employee to update");
       return;
     }
 
     try {
       const response = await axios.put(
-        `http://localhost:4500/employees/${employeeObj.id}`,
+        `http://localhost:4500/employees/${employeeObj.empId}`,
         employeeObj
       );
       if (response.status === 200) {
         alert("Employee Update Success");
         getAllEmployee();
-        setEmployeeObj({
-          empId: 0,
-          name: "",
-          contactNo: "",
-          email: "",
-          city: "",
-          state: "",
-          pinCode: "",
-          designation: "",
-          mockEmpRelatives: [],
-        });
-        setRelativeObj({
-            id: 0,
-            relativeId: 0,
-            name: "",
-            relation: "",
-            age: 0,
-            empId: 0,
-          });
+        initialData();
       }
     } catch (error) {
       alert("Failed to update employee: " + error.message);
@@ -184,11 +154,65 @@ const SingleWithMultple = () => {
     }
   };
 
+  const initialData = async () => {
+    setEmployeeObj({
+      empId: 0,
+      name: "",
+      contactNo: "",
+      email: "",
+      city: "",
+      state: "",
+      pinCode: "",
+      designation: "",
+      mockEmpRelatives: [],
+    });
+    setRelativeObj({
+      relativeId: 0,
+      name: "",
+      relation: "",
+      age: 0,
+      empId: 0,
+    });
+  };
+
+  // Search filter
+  const filteredList = empList.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.designation.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Sorting logic
+  const sortedList = [...currentItems].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === "asc" ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const requestSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
   return (
     <div className="container-fluid">
       <div className="mt-2 p-3 bg-primary text-white rounded text-center">
         <h1>Single With Multiple Entity</h1>
-        <h5>Employee With Multple Family Relative Scenario </h5>
+        <h5>Employee With Multiple Family Relative Scenario </h5>
       </div>
       {isNewView && (
         <div className="row pt-2">
@@ -301,7 +325,7 @@ const SingleWithMultple = () => {
                       </div>
                       <div className="col-4">
                         <label>
-                          <b>Dasignation</b>
+                          <b>Designation</b>
                         </label>
                         <select
                           value={employeeObj.designation}
@@ -319,13 +343,16 @@ const SingleWithMultple = () => {
                     </div>
                     <div className="row mt-4">
                       <div className="col-6 text-end">
-                        <button className="btn text-white btn-sm bg-secondary">
+                        <button
+                          className="btn text-white btn-sm bg-secondary"
+                          onClick={initialData}
+                        >
                           Reset
                         </button>
                       </div>
                       <div className="col-6">
-                        {/* Create Button - Show only if `id` is 0 */}
-                        {employeeObj.empId === 0  && (
+                        {/* Create Button - Show only if `empId` is 0 */}
+                        {employeeObj.empId === 0 && (
                           <button
                             className="btn text-white btn-sm bg-success"
                             onClick={createEmployee}
@@ -333,9 +360,9 @@ const SingleWithMultple = () => {
                             Save Employee
                           </button>
                         )}
-                        {employeeObj.id !== 0 && (
+                        {employeeObj.empId !== 0 && (
                           <button
-                            className="btn btn-sm bg-secondary"
+                            className="btn text-white btn-sm bg-info"
                             onClick={updateEmp}
                           >
                             Update Employee
@@ -345,91 +372,60 @@ const SingleWithMultple = () => {
                     </div>
                   </div>
                   <div className="col-5">
+                    {/* Relative Information Form */}
+                    <h6 className="card-title">Add Family Relatives</h6>
                     <div className="row">
-                      <div className="col-4">
+                      <div className="col-6">
                         <label>
                           <b>Name</b>
                         </label>
                         <input
                           type="text"
+                          value={relativeObj.name || ""}
                           onChange={(event) => {
                             updateRelativeFormValues(event, "name");
                           }}
-                          placeholder="Relative Name"
                           className="form-control"
+                          placeholder="Enter Relative Name"
                         />
                       </div>
-                      <div className="col-3">
-                        <label>
-                          <b>Relation</b>
-                        </label>
-                        <select
-                          className="form-control"
-                          onChange={(event) => {
-                            updateRelativeFormValues(event, "relation");
-                          }}
-                        >
-                          <option value="">Select</option>
-                          <option value="Mother">Mother</option>
-                          <option value="Father">Father</option>
-                          <option value="Sister">Sister</option>
-                          <option value="Brother">Brother</option>
-                        </select>
-                      </div>
-                      <div className="col-3">
+                      <div className="col-6">
                         <label>
                           <b>Age</b>
                         </label>
                         <input
                           type="text"
-                          placeholder="Age"
+                          value={relativeObj.age || ""}
                           onChange={(event) => {
                             updateRelativeFormValues(event, "age");
                           }}
                           className="form-control"
+                          placeholder="Enter Relative Age"
                         />
                       </div>
-                      <div className="col-1 mt-4 text-end">
+                    </div>
+                    <div className="row mt-3">
+                      <div className="col-6">
+                        <label>
+                          <b>Relation</b>
+                        </label>
+                        <input
+                          type="text"
+                          value={relativeObj.relation || ""}
+                          onChange={(event) => {
+                            updateRelativeFormValues(event, "relation");
+                          }}
+                          className="form-control"
+                          placeholder="Enter Relation"
+                        />
+                      </div>
+                      <div className="col-6 pt-3">
                         <button
-                          className="btn btn-sm bg-primary"
+                          className="btn btn-sm btn-primary"
                           onClick={addRelative}
                         >
-                          Add
+                          Add Relative
                         </button>
-                      </div>
-                    </div>
-                    <div className="row mt-2">
-                      <div className="col-12">
-                        <table className="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Sr</th>
-                              <th>Name</th>
-                              <th>Relation</th>
-                              <th>Age</th>
-                              <th className="text-center">Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {
-                            employeeObj.mockEmpRelatives.map((item, index) => {
-                              return (
-                                <tr key={index}>
-                                  <td>{index + 1}</td>
-                                  <td>{item.name}</td>
-                                  <td>{item.relation}</td>
-                                  <td>{item.age}</td>
-                                  <td className="text-center">
-                                    <button className="btn btn-sm btn-danger">
-                                      Delete
-                                    </button>
-                                  </td>
-                                </tr>
-                              );
-                            })
-                        }
-                          </tbody>
-                        </table>
                       </div>
                     </div>
                   </div>
@@ -439,11 +435,13 @@ const SingleWithMultple = () => {
           </div>
         </div>
       )}
+
+      {/* List View (Table of employees) */}
       {!isNewView && (
-        <div className="row pt-2">
+        <div className="row">
           <div className="col-12">
             <div className="card">
-              <div className="card-header bg-success">
+              <div className="card-header bg-warning text-white">
                 <div className="row">
                   <div className="col-6"> Employee List</div>
                   <div className="col-6 text-end">
@@ -451,55 +449,94 @@ const SingleWithMultple = () => {
                       className="btn btn-sm btn-primary"
                       onClick={changeView}
                     >
-                      New Employee
+                      Add New
                     </button>
                   </div>
                 </div>
               </div>
               <div className="card-body">
+                <input
+                  type="text"
+                  className="form-control mb-3"
+                  placeholder="Search by name or designation"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+                {/* Table for displaying employees */}
                 <table className="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Sr</th>
-                      <th>Name</th>
-                      <th>Contact</th>
-                      <th>City</th>
-                      <th>Designation</th>
-                      <th>Action</th>
+                      <th
+                        onClick={() => requestSort("name")}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Name
+                      </th>
+                      <th
+                        onClick={() => requestSort("contactNo")}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Contact No
+                      </th>
+                      <th
+                        onClick={() => requestSort("email")}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Email
+                      </th>
+                      <th
+                        onClick={() => requestSort("designation")}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Designation
+                      </th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {empList.map((item, index) => {
-                      return (
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{item.name}</td>
-                          <td>{item.contactNo}</td>
-                          <td>{item.city}</td>
-                          <td>{item.designation}</td>
-                          <td>
-                            <button
-                              className="btn btn-sm btn-primary"
-                              onClick={() => {
-                                getEmployeeById(item.id);
-                              }}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="btn btn-sm btn-danger mx-2"
-                              onClick={() => {
-                                deleteEmp(item.id);
-                              }}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {sortedList.map((emp) => (
+                      <tr key={emp.empId}>
+                        <td>{emp.name}</td>
+                        <td>{emp.contactNo}</td>
+                        <td>{emp.email}</td>
+                        <td>{emp.designation}</td>
+                        <td>
+                          <button
+                            className="btn btn-sm btn-info"
+                            onClick={() => getEmployeeById(emp.empId)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={() => deleteEmp(emp.empId)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
+
+                {/* Pagination */}
+                <div className="d-flex justify-content-center">
+                  {Array.from(
+                    { length: Math.ceil(filteredList.length / itemsPerPage) },
+                    (_, i) => (
+                      <button
+                        key={i}
+                        className={`btn btn-sm ${
+                          currentPage === i + 1 ? "btn-primary" : "btn-light"
+                        }`}
+                        onClick={() => paginate(i + 1)}
+                      >
+                        {i + 1}
+                      </button>
+                    )
+                  )}
+                </div>
               </div>
             </div>
           </div>
